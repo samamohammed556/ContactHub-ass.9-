@@ -1,983 +1,233 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameArena</title>
-    <link rel="shortcut icon" href="imgs/game-icon-svg-download-png-8749659.webp" type="image/x-icon">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Days+One&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="css/styling.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ContactHub - Smart Contact Manager</title>
+
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/all.min.css">
+<link rel="stylesheet" href="css/styling.css">
 </head>
+<body>
+ 
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+ 
 
-<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-smooth-scroll="true" data-bs-offset="100" tabindex="0">
+  <header class="app-header sticky-top">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between py-3">
 
-    <nav id="mainNav" class="navbar navbar-expand-lg navbar-gaming fixed-top py-3">
-        <div class="container">
-            <a class="navbar-brand brand-font fs-5" href="#hero">
-                <i class="fa-solid fa-gamepad neon me-3"></i><span class="neon">GameArena</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
-                <i class="fa-solid fa-bars"></i>
+        <div class="d-flex align-items-center gap-3">
+          <div class="brand-icon">
+            <i class="fa-solid fa-address-book"></i>
+          </div>
+          <div>
+            <h1 class="brand-title mb-0">Contact<span class="text-brand">Hub</span></h1>
+            <p class="brand-sub d-none d-sm-block mb-0">Smart Contact Manager</p>
+          </div>
+        </div>
+ 
+
+        <div class="d-flex align-items-center gap-2">
+          <button id="addContactBtn" class="btn btn-brand d-flex align-items-center gap-2">
+            <i class="fa-solid fa-plus small"></i>
+            <span class="d-none d-sm-inline">Add Contact</span>
+            <span class="d-sm-none">Add</span>
+          </button>
+          <button class="icon-btn d-none d-sm-flex"><i class="fa-solid fa-bell"></i></button>
+          <button class="icon-btn d-none d-sm-flex"><i class="fa-solid fa-gear"></i></button>
+          <div class="header-avatar"><img src="images/avaTAR.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </header>
+ 
+
+  <main class="container py-4">
+
+    <section class="row g-3 mb-4">
+      <div class="col-6 col-md-4">
+        <div class="stat-card">
+          <div class="stat-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+          <div>
+            <p class="stat-label mb-0">Total</p>
+            <p class="stat-num mb-0" id="statTotal">0</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="stat-card">
+          <div class="stat-icon icon-amber"><i class="fa-solid fa-star"></i></div>
+          <div>
+            <p class="stat-label mb-0">Favorites</p>
+            <p class="stat-num mb-0" id="statFav">0</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="stat-card">
+          <div class="stat-icon icon-rose"><i class="fa-solid fa-heart-pulse"></i></div>
+          <div>
+            <p class="stat-label mb-0">Emergency</p>
+            <p class="stat-num mb-0" id="statEmg">0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <div class="row g-4">
+
+      <div class="col-lg-8 order-2 order-lg-1">
+ 
+        <div class="d-flex flex-column flex-sm-row sm-align-items-center justify-content-between gap-2 mb-3">
+          <div>
+            <h2 class="section-title mb-1">All Contacts</h2>
+            <p class="section-sub mb-0" id="contactsSubtitle">Manage and organize your 0 contacts</p>
+          </div>
+        </div>
+
+        <div class="position-relative mb-4">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="searchInput" class="form-control search-input"
+            placeholder="Search by name, phone, or email...">
+        </div>
+ 
+   
+        <div class="row row-cols-1 row-cols-sm-2 g-3" id="contactsGrid"></div>
+ 
+        <div id="emptyState" class="empty-state d-none">
+          <div class="empty-icon"><i class="fa-solid fa-address-book"></i></div>
+          <p class="fw-semibold mb-1">No contacts found</p>
+          <p class="text-secondary small mb-0">Click "Add Contact" to get started</p>
+        </div>
+      </div>
+ 
+
+      <aside class="col-lg-4 order-1 order-lg-2">
+        <div class="side-sticky d-flex flex-column gap-3">
+ 
+
+          <div class="side-panel">
+            <div class="side-panel-head head-amber">
+              <div class="side-icon icon-amber"><i class="fa-solid fa-star"></i></div>
+              <div>
+                <h2 class="side-title mb-0">Favorites</h2>
+                <p class="side-sub mb-0">Quick access to starred contacts</p>
+              </div>
+            </div>
+            <div class="side-panel-body" id="favList"></div>
+          </div>
+ 
+
+          <div class="side-panel">
+            <div class="side-panel-head head-rose">
+              <div class="side-icon icon-rose"><i class="fa-solid fa-heart-pulse"></i></div>
+              <div>
+                <h2 class="side-title mb-0">Emergency</h2>
+                <p class="side-sub mb-0">Important contacts for urgent calls</p>
+              </div>
+            </div>
+            <div class="side-panel-body" id="emgList"></div>
+          </div>
+ 
+        </div>
+      </aside>
+    </div>
+  </main>
+ 
+
+  <div class="modal fade" id="contactModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content app-modal">
+        <div class="modal-header border-0 pb-0">
+          <h2 class="modal-title fw-bold" id="modalTitle">Add New Contact</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="contactForm" class="modal-body pt-2">
+          <input type="hidden" id="contactId">
+ 
+    
+          <div class="text-center mb-3">
+            <div class="avatar-uploader" id="avatarPreview"><i class="fa-solid fa-user"></i></div>
+            <label class="btn btn-light btn-sm rounded-pill mt-2 change-photo-btn">
+              <i class="fa-solid fa-camera me-1"></i> Change Photo
+              <input type="file" id="avatarInput" accept="image/*" class="d-none">
+            </label>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Full Name <span class="text-danger">*</span></label>
+            <input type="text" id="contactName" class="form-control" placeholder="Enter full name">
+            <div class="invalid-feedback">Name should contain only letters and spaces (2-50 characters)</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+            <input type="text" id="contactPhone" class="form-control" placeholder="e.g., 01012345678">
+            <div class="invalid-feedback">Please enter a valid Egyptian phone number</div>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input type="text" id="contactEmail" class="form-control" placeholder="name@example.com">
+            <div class="invalid-feedback">Please enter a valid email address</div>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input type="text" id="contactAddress" class="form-control" placeholder="Enter address">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Group</label>
+            <select id="contactGroup" class="form-select">
+              <option value="">Select a group</option>
+              <option value="family">Family</option>
+              <option value="friends">Friends</option>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Notes</label>
+            <textarea id="contactNotes" class="form-control" rows="2"
+              placeholder="Add notes about this contact"></textarea>
+          </div>
+ 
+          <div class="d-flex flex-wrap gap-4 mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="contactFavorite">
+              <label class="form-check-label fw-semibold small" for="contactFavorite">
+                <i class="fa-solid fa-star text-warning me-1"></i>Favorite
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="contactEmergency">
+              <label class="form-check-label fw-semibold small" for="contactEmergency">
+                <i class="fa-solid fa-heart-pulse text-danger me-1"></i>Emergency
+              </label>
+            </div>
+          </div>
+ 
+          <div class="d-flex flex-column-reverse flex-sm-row gap-2">
+            <button type="button" class="btn btn-light flex-fill fw-semibold"
+              data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submitBtn" class="btn btn-brand flex-fill fw-semibold">
+              <i class="fa-solid fa-check me-2"></i>Save Contact
             </button>
-            <div class="collapse navbar-collapse" id="navContent">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#latest-games">Our Games</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#what-we-do">What We Do</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#team-members">Our Team</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
-                </ul>
-                <div class="d-flex nav-utility gap-2 mt-3 mt-lg-0 nav-items">
-                    <a href="#" class="nav-util-item">
-                        <i class="fa-regular fa-bell nav-icon1"></i>
-                        <span class="d-lg-none">Notifications</span>
-                    </a>
-                    <a href="#" class="nav-util-item">
-                        <i class="fa-regular fa-message nav-icon2"></i>
-                        <span class="d-lg-none">Messages</span>
-                    </a>
-                    <a href="#" class="btn btn-neon btn-sm">Sign In</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <section id="hero" class="hero-section position-relative">
-            <div class="layer position-absolute top-0 end-0 start-0 bottom-0 bg-color"></div>
-            <div class="container position-relative">
-                <div class="row align-items-center gy-5">
-                    <div class="col-lg-6 ">
-                        <div class="inner">
-                            <h1 class=" mb-3">
-                                THE ULTIMATE<br>
-                                <span class="neon">GAMING</span><br>
-                                EXPERIENCE
-                            </h1>
-                            <p class=" mb-4">Join millions of gamers worldwide in the most competitive
-                                eSports
-                                tournaments. Experience next-level gaming with cutting-edge technology and endless
-                                possibilities.</p>
-                        </div>
-                        <div class="d-flex gap-3 flex-wrap buttons">
-                            <a href="#latest-games" class="btn btn-neon btn-2">Start Now</a>
-                            <a href="#" class="btn btn-outline-neon btn-2">Watch Tournaments</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="hero-media position-relative rounded-4">
-                            <div class="hero-frame-wrap rounded-4">
-                                <img src="imgs/hero-img.png" class="rounded-4 hero-frame w-100"
-                                    style="height: 400px; object-fit: cover;" alt="professional gaming setup">
-                            </div>
-                            <div class="stat-float card-response bg py-4 px-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <i class="fa-solid fa-trophy neon fs-4"></i>
-                                    <div>
-                                        <small class="text-secondary d-block">Active Players</small>
-                                        <h4 class="neon mb-0">2.5M+</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="ga-games-section" id="latest-games">
-            <div class="container">
-
-                <div class="text-center ga-section-heading">
-                    <p class="ga-eyebrow">
-                        <span class="ga-line"></span>
-                        <span>OUR GAMES</span>
-                        <span class="ga-line"></span>
-                    </p>
-                    <h2 class="ga-title">Our Latest Games</h2>
-                </div>
-
-                <div id="gamesCarouselLg" class="carousel slide ga-carousel d-none d-lg-block">
-                    <div class="carousel-inner">
-
-                        <div class="carousel-item active">
-                            <div class="row g-4">
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-1.png" alt="Alien Companions">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-gamepad"></i> ADVENTURE</li>
-                                            <li class="game-badge"><i class="fa-solid fa-users"></i> MULTIPLAYER</li>
-                                        </ul>
-                                        <h3 class="game-name">Alien Companions</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-2.png" alt="Cyber Run 2099">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-flag-checkered"></i> RACING
-                                            </li>
-                                            <li class="game-badge"><i class="fa-solid fa-bolt"></i> SCI-FI</li>
-                                        </ul>
-                                        <h3 class="game-name">Cyber Run 2099</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-3.png"
-                                                alt="The Legend of Zelda: Tears of the Kingdom">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-brands fa-discord"></i> ACTION</li>
-                                            <li class="game-badge"><i class="fa-solid fa-microchip"></i> GEFORCE</li>
-                                        </ul>
-                                        <h3 class="game-name">The Legend of Zelda: Tears of the Kingdom</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row g-4">
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-4.png" alt="Aetheria Chronicles">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-shield-halved"></i> RPG</li>
-                                            <li class="game-badge"><i class="fa-solid fa-wand-magic-sparkles"></i>
-                                                FANTASY
-                                            </li>
-                                        </ul>
-                                        <h3 class="game-name">Aetheria Chronicles</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-5.png" alt="Warfront Protocol">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-crosshairs"></i> SHOOTER</li>
-                                            <li class="game-badge"><i class="fa-solid fa-user-group"></i> CO-OP</li>
-                                        </ul>
-                                        <h3 class="game-name">Warfront Protocol</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-6.png" alt="Shot Striker">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-dragon"></i> FOOTBALL</li>
-                                            <li class="game-badge"><i class="fa-solid fa-star"></i> FANTASY</li>
-                                        </ul>
-                                        <h3 class="game-name">Shot Striker</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            <div class="row g-4">
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-7.png" alt="Epic  League">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-trophy"></i> SPORTS</li>
-                                            <li class="game-badge"><i class="fa-solid fa-fire"></i> LEAGUE</li>
-                                        </ul>
-                                        <h3 class="game-name">Epic League</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-8.png" alt="Barren alien worlds">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-rocket"></i> SPACE</li>
-                                            <li class="game-badge"><i class="fa-solid fa-globe"></i> EXPLORATION</li>
-                                        </ul>
-                                        <h3 class="game-name">Barren alien worlds</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-9.png" alt="Cloveland Quest">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-hat-wizard"></i> ACTION</li>
-                                            <li class="game-badge"><i class="fa-solid fa-landmark-dome"></i> FUTURISTIC
-                                            </li>
-                                        </ul>
-                                        <h3 class="game-name">Cloveland Quest</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="ga-controls">
-                        <button class="ga-arrow-btn" type="button" data-bs-target="#gamesCarouselLg"
-                            data-bs-slide="prev">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="ga-arrow-btn" type="button" data-bs-target="#gamesCarouselLg"
-                            data-bs-slide="next">
-                            <i class="fa-solid fa-arrow-right"></i>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                        <a href="#" class="btn ga-view-all-btn">VIEW ALL GAMES</a>
-                    </div>
-                </div>
-
-
-                <div id="gamesCarouselMd" class="carousel slide ga-carousel d-none d-md-block d-lg-none">
-                    <div class="carousel-inner">
-
-                        <div class="carousel-item active">
-                            <div class="row g-4">
-
-                                <div class="col-6">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-1.png" alt="Alien Companions">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-gamepad"></i> ADVENTURE</li>
-                                            <li class="game-badge"><i class="fa-solid fa-users"></i> MULTIPLAYER</li>
-                                        </ul>
-                                        <h3 class="game-name">Alien Companions</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-6">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-2.png" alt="Cyber Run 2099">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-flag-checkered"></i> RACING
-                                            </li>
-                                            <li class="game-badge"><i class="fa-solid fa-bolt"></i> SCI-FI</li>
-                                        </ul>
-                                        <h3 class="game-name">Cyber Run 2099</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            <div class="row g-4">
-
-                                <div class="col-6">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-3.png"
-                                                alt="The Legend of Zelda: Tears of the Kingdom">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-brands fa-discord"></i> ACTION</li>
-                                            <li class="game-badge"><i class="fa-solid fa-microchip"></i> GEFORCE</li>
-                                        </ul>
-                                        <h3 class="game-name">The Legend of Zelda: Tears of the Kingdom</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-6">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-4.png" alt="Aetheria Chronicles">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-shield-halved"></i> RPG</li>
-                                            <li class="game-badge"><i class="fa-solid fa-wand-magic-sparkles"></i>
-                                                FANTASY
-                                            </li>
-                                        </ul>
-                                        <h3 class="game-name">Aetheria Chronicles</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            <div class="row g-4">
-
-                                <div class="col-6">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-5.png" alt="Warfront Protocol">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-crosshairs"></i> SHOOTER</li>
-                                            <li class="game-badge"><i class="fa-solid fa-user-group"></i> CO-OP</li>
-                                        </ul>
-                                        <h3 class="game-name">Warfront Protocol</h3>
-                                    </article>
-                                </div>
-
-                                <div class="col-6">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-6.png" alt="Shot Striker">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-dragon"></i> FOOTBALL</li>
-                                            <li class="game-badge"><i class="fa-solid fa-star"></i> FANTASY</li>
-                                        </ul>
-                                        <h3 class="game-name">Shot Striker</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="ga-controls">
-                        <button class="ga-arrow-btn" type="button" data-bs-target="#gamesCarouselMd"
-                            data-bs-slide="prev">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="ga-arrow-btn" type="button" data-bs-target="#gamesCarouselMd"
-                            data-bs-slide="next">
-                            <i class="fa-solid fa-arrow-right"></i>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                        <a href="#" class="btn ga-view-all-btn">VIEW ALL GAMES</a>
-                    </div>
-                </div>
-                <div id="gamesCarouselSm" class="carousel slide ga-carousel d-block d-md-none">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row g-4">
-
-                                <div class="col-12">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-1.png" alt="Alien Companions">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-gamepad"></i> ADVENTURE</li>
-                                            <li class="game-badge"><i class="fa-solid fa-users"></i> MULTIPLAYER</li>
-                                        </ul>
-                                        <h3 class="game-name">Alien Companions</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            <div class="row g-4">
-
-                                <div class="col-12">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-2.png" alt="Cyber Run 2099">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-solid fa-flag-checkered"></i> RACING
-                                            </li>
-                                            <li class="game-badge"><i class="fa-solid fa-bolt"></i> SCI-FI</li>
-                                        </ul>
-                                        <h3 class="game-name">Cyber Run 2099</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row g-4">
-
-                                <div class="col-12">
-                                    <article class="game-card">
-                                        <div class="game-img-wrap">
-                                            <img src="imgs/latest-games-3.png"
-                                                alt="The Legend of Zelda: Tears of the Kingdom">
-                                        </div>
-                                        <ul class="game-badges">
-                                            <li class="game-badge"><i class="fa-brands fa-discord"></i> ACTION</li>
-                                            <li class="game-badge"><i class="fa-solid fa-microchip"></i> GEFORCE</li>
-                                        </ul>
-                                        <h3 class="game-name">The Legend of Zelda: Tears of the Kingdom</h3>
-                                    </article>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="ga-controls">
-                        <button class="ga-arrow-btn" type="button" data-bs-target="#gamesCarouselSm"
-                            data-bs-slide="prev">
-                            <i class="fa-solid fa-arrow-left"></i>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="ga-arrow-btn" type="button" data-bs-target="#gamesCarouselSm"
-                            data-bs-slide="next">
-                            <i class="fa-solid fa-arrow-right"></i>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                        <a href="#" class="btn ga-view-all-btn">VIEW ALL GAMES</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="wwd-section" id="what-we-do">
-            <div class="container">
-
-                <div class="text-center ga-section-heading">
-                    <p class="ga-eyebrow">
-                        <span class="ga-line"></span>
-                        <span>WHAT WE DO</span>
-                        <span class="ga-line"></span>
-                    </p>
-                    <h2 class="ga-title">
-                        <span style="font-family:Days One">More Than Just Games</span><br>
-                        We Build <span class="wwd-highlight">Interactive</span> Journeys
-                    </h2>
-                </div>
-
-                <div class="row row-cols-2 row-cols-lg-4 g-4">
-
-                    <div class="col">
-                        <article class="wwd-card">
-                            <span class="wwd-corner wwd-corner-tl"></span>
-                            <span class="wwd-corner wwd-corner-br"></span>
-                            <div class="wwd-icon"><i class="fa-solid fa-desktop"></i></div>
-                            <h3 class="wwd-name">PC Game Development</h3>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card">
-                            <span class="wwd-corner wwd-corner-tl"></span>
-                            <span class="wwd-corner wwd-corner-br"></span>
-                            <div class="wwd-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                            <h3 class="wwd-name">Mobile Game Development</h3>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card wwd-card-image">
-                            <img src="imgs/what-we-do-1.png" alt="Game controllers">
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card">
-                            <span class="wwd-corner wwd-corner-tl"></span>
-                            <span class="wwd-corner wwd-corner-br"></span>
-                            <div class="wwd-icon"><i class="fa-solid fa-vr-cardboard"></i></div>
-                            <h3 class="wwd-name">AR/VR <br> Solutions</h3>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card">
-                            <span class="wwd-corner wwd-corner-tl"></span>
-                            <span class="wwd-corner wwd-corner-br"></span>
-                            <div class="wwd-icon"><i class="fa-solid fa-cubes"></i></div>
-                            <h3 class="wwd-name">AR/VR <br> Design</h3>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card wwd-card-image">
-                            <img src="imgs/what-we-do-2.png" alt="Game mascot character">
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card">
-                            <span class="wwd-corner wwd-corner-tl"></span>
-                            <span class="wwd-corner wwd-corner-br"></span>
-                            <div class="wwd-icon"><i class="fa-brands fa-playstation"></i></div>
-                            <h3 class="wwd-name">PS4 Game Development</h3>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="wwd-card">
-                            <span class="wwd-corner wwd-corner-tl"></span>
-                            <span class="wwd-corner wwd-corner-br"></span>
-                            <div class="wwd-icon"><i class="fa-solid fa-cube"></i></div>
-                            <h3 class="wwd-name">3D <br> Modelings</h3>
-                        </article>
-                    </div>
-
-                </div>
-
-                <div class="wwd-divider"></div>
-
-            </div>
-        </section>
-
-        <section class="partners-section">
-
-            <span class="partners-glow"></span>
-
-            <div class="partners-marquee">
-
-                <div class="partners-row partners-row-1">
-                    <ul class="partners-track">
-                        <li class="partner-card"><img src="imgs/logo-1.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-2.jpg" alt=" "></li>
-                        <li class="partner-card"><img src="imgs/logo-3.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-4.jpg" alt=" "></li>
-                        <li class="partner-card"><img src="imgs/logo-5.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-6.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-7.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-8.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-9.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-10.jpg" alt=" "></li>
-                        <li class="partner-card"><img src="imgs/logo-11.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-12.jpg" alt=""></li>
-
-                        <li class="partner-card"><img src="imgs/logo-1.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-2.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-3.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-4.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-5.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-6.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-7.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-8.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-9.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-10.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-11.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-12.jpg" alt=""></li>
-                    </ul>
-                </div>
-
-                <div class="partners-row partners-row-2">
-                    <ul class="partners-track partners-track-reverse">
-                        <li class="partner-card"><img src="imgs/logo-6.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-7.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-8.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-9.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-10.jpg" alt=" "></li>
-                        <li class="partner-card"><img src="imgs/logo-11.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-12.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-1.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-2.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-3.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-4.jpg" alt=" "></li>
-                        <li class="partner-card"><img src="imgs/logo-5.jpg" alt=""></li>
-
-                        <li class="partner-card"><img src="imgs/logo-6.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-7.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-8.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-9.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-10.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-11.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-12.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-1.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-2.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-3.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-4.jpg" alt=""></li>
-                        <li class="partner-card"><img src="imgs/logo-5.jpg" alt=""></li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="team-section" id="team-members">
-            <div class="container">
-
-                <div class="text-center ga-section-heading">
-                    <p class="ga-eyebrow">
-                        <span class="ga-line"></span>
-                        <span>OUR TEAM</span>
-                        <span class="ga-line"></span>
-                    </p>
-                    <h2 class="ga-title"
-                        style="font-family: 'Days One';color:#f1f1f1; font-size: 48px; line-height: 48px;">Our Best Team
-                        Members</h2>
-                    <p class="team-subtitle">Meet the professional gamers and experts behind our success</p>
-                </div>
-
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-1.png" alt="AlPhan Chen">
-                                <img class="team-photo-color" src="imgs/avatar-1.png" alt="">
-                            </div>
-                            <span class="team-tag">PHANTOM</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Alex "Phantom" Chen</h3>
-                                <p class="team-role">Pro Player - VALORANT</p>
-                                <p class="team-sub">World Champion 2023</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-2.png" alt="AN Ahmed">
-                                <img class="team-photo-color" src="imgs/avatar-2.png" alt="">
-                            </div>
-                            <span class="team-tag">NOVA</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Ali "Nova" Ahmed</h3>
-                                <p class="team-role">Pro Player - League of Legends</p>
-                                <p class="team-sub">MVP 2023 Season</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-3.png" alt="MarcVi Rodriguez">
-                                <img class="team-photo-color" src="imgs/avatar-3.png" alt="">
-                            </div>
-                            <span class="team-tag">VIPER</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Marcus "Viper" Rodriguez</h3>
-                                <p class="team-role">Head Coach - CS:GO</p>
-                                <p class="team-sub">5x Major Winner</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-4.png" alt="SeS Usama">
-                                <img class="team-photo-color" src="imgs/avatar-4.png" alt="">
-                            </div>
-                            <span class="team-tag">SAGA</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Seif "Saga" Usama</h3>
-                                <p class="team-role">Strategic Analyst</p>
-                                <p class="team-sub">Data Science Expert</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-5.png" alt="JaSt Wilson">
-                                <img class="team-photo-color" src="imgs/avatar-5.png" alt="">
-                            </div>
-                            <span class="team-tag">STORM</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Jake "Storm" Wilson</h3>
-                                <p class="team-role">Pro Player - Apex Legends</p>
-                                <p class="team-sub">Rising Star 2023</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-6.png" alt="DavTi Park">
-                                <img class="team-photo-color" src="imgs/avatar-6.png" alt="">
-                            </div>
-                            <span class="team-tag">TITAN</span>
-                            <div class="team-info">
-                                <h3 class="team-name">David "Titan" Park</h3>
-                                <p class="team-role">Team Captain - Dota 2</p>
-                                <p class="team-sub">The International Winner</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-7.png" alt="KhalPhoe Ali">
-                                <img class="team-photo-color" src="imgs/avatar-7.png" alt="">
-                            </div>
-                            <span class="team-tag">PHOENIX</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Khaled "Phoenix" Ali</h3>
-                                <p class="team-role">Content Creator</p>
-                                <p class="team-sub">2M+ Followers</p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col">
-                        <article class="team-card">
-                            <div class="team-photo">
-                                <img class="team-photo-base" src="imgs/avatar-8.png" alt="RyGh Miller">
-                                <img class="team-photo-color" src="imgs/avatar-8.png" alt="">
-                            </div>
-                            <span class="team-tag">GHOST</span>
-                            <div class="team-info">
-                                <h3 class="team-name">Ryan "Ghost" Miller</h3>
-                                <p class="team-role">Team Manager</p>
-                                <p class="team-sub">Operations Lead</p>
-                            </div>
-                        </article>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <section class="contact-section" id="contact">
-            <div class="container">
-
-                <div class="text-center ga-section-heading">
-                    <p class="ga-eyebrow">
-                        <span class="ga-line"></span>
-                        <span>CONTACT US</span>
-                        <span class="ga-line"></span>
-                    </p>
-                    <h2 class="ga-title">Get In Touch</h2>
-                    <p class=" contact-subtitle">Have questions or need support? We're here to help!</p>
-                </div>
-
-                <div class="row g-4">
-
-                    <div class="col-12 col-lg-6">
-                        <div class="d-flex flex-column gap-4 h-100">
-
-                            <div class="contact-info-card">
-                                <span class="contact-info-icon"><i class="fa-solid fa-location-dot"></i></span>
-                                <div>
-                                    <h3 class="contact-info-title">Our Location</h3>
-                                    <p class="contact-info-text">123 Gaming Street, Esports City, EC 12345</p>
-                                </div>
-                            </div>
-
-                            <div class="contact-info-card">
-                                <span class="contact-info-icon"><i class="fa-solid fa-phone"></i></span>
-                                <div>
-                                    <h3 class="contact-info-title">Phone Number</h3>
-                                    <p class="contact-info-text">+1 (555) 123-4567</p>
-                                </div>
-                            </div>
-
-                            <div class="contact-info-card">
-                                <span class="contact-info-icon"><i class="fa-solid fa-envelope"></i></span>
-                                <div>
-                                    <h3 class="contact-info-title">Email Address</h3>
-                                    <p class="contact-info-text">contact@gamearena.com</p>
-                                </div>
-                            </div>
-
-                            <div class="contact-community-card">
-                                <h3 class="community-title">Join Our Community</h3>
-                                <p class="community-text">Connect with us on social media for the latest updates</p>
-                                <ul class="community-socials">
-                                    <li><a href="https://discord.com/" target="_blank" class="social-icon"
-                                            aria-label="Discord"><i class="fa-brands fa-discord"></i></a></li>
-                                    <li><a href="https://x.com/" target="_blank" class="social-icon" aria-label="X"><i
-                                                class="fa-brands fa-x-twitter"></i></a></li>
-                                    <li><a href="https://www.instagram.com/?hl=en" target="_blank" class="social-icon"
-                                            aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
-                                    <li><a href="https://www.youtube.com/" target="_blank" class="social-icon"
-                                            aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-6">
-                        <div class="contact-form-card h-100">
-                            <h3 class="form-title">Send us a Message</h3>
-
-                            <form>
-                                <div class="row g-3">
-
-                                    <div class="col-12 col-sm-6">
-                                        <label class="form-label contact-label" for="firstName">First Name</label>
-                                        <input type="text" class="form-control contact-input" id="firstName"
-                                            placeholder="Your first name">
-                                    </div>
-
-                                    <div class="col-12 col-sm-6">
-                                        <label class="form-label contact-label" for="lastName">Last Name</label>
-                                        <input type="text" class="form-control contact-input" id="lastName"
-                                            placeholder="Your last name">
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label contact-label" for="emailAddress">Email Address</label>
-                                        <input type="email" class="form-control contact-input" id="emailAddress"
-                                            placeholder="your.email@example.com">
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label contact-label" for="subject">Subject</label>
-                                        <select class="form-select contact-input" id="subject">
-                                            <option>General Inquiry</option>
-                                            <option>Tournament Support</option>
-                                            <option>Technical Issue</option>
-                                            <option>Partnership</option>
-                                            <option>Media Request</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label contact-label" for="message">Message</label>
-                                        <textarea class="form-control contact-input" id="message" rows="5"
-                                            placeholder="Tell us how we can help you..."></textarea>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class=" d-flex align-items-center gap-2">
-                                            <input class="contact-checkbox" type="checkbox" id="subscribe">
-                                            <label class=" contact-checklabel" for="subscribe">Subscribe
-                                                to our newsletter for gaming updates</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <a href="#team-members" class="btn contact-submit-btn w-100">
-                                            Send Message <i class="fa-solid fa-paper-plane"></i>
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </form>
-
-                            <hr class="contact-divider">
-
-                            <div class="row text-center g-3">
-                                <div class="col-6">
-                                    <p class="contact-stat-number">24/7</p>
-                                    <p class="contact-stat-label">Support Available</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="contact-stat-number"> 1hr</p>
-                                    <p class="contact-stat-label">Average Response</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-
-            <div class="row g-4 footer-top">
-
-                <div class="col-12 col-md-6 col-lg-3">
-                    <a class="footer-brand" href="#hero">
-                        <i class="fa-solid fa-gamepad neon"></i>
-                        <span class="neon">GameArena</span>
-                    </a>
-                    <p class="footer-text">The ultimate destination for competitive gaming, esports tournaments, and
-                        gaming community.</p>
-                    <ul class="footer-socials">
-                        <li><a href="#https://x.com/" target="_blank" class="  footer-social-icon" aria-label="X"><i
-                                    class="fa-brands fa-x-twitter"></i></a></li>
-                        <li><a href="https://www.facebook.com/" target="_blank" class="footer-social-icon" aria-label="Facebook"><i
-                                    class="fa-brands fa-facebook"></i></a></li>
-                        <li><a href="https://www.instagram.com/" target="_blank" class="footer-social-icon" aria-label="Instagram"><i
-                                    class="fa-brands fa-instagram"></i></a></li>
-                        <li><a href="https://www.youtube.com/" target="_blank" class="footer-social-icon" aria-label="YouTube"><i
-                                    class="fa-brands fa-youtube"></i></a></li>
-                        <li><a  href="https://www.twitch.tv/" target="_blank"  class="footer-social-icon" aria-label="Twitch"><i
-                                    class="fa-brands fa-twitch"></i></a></li>
-                    </ul>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3">
-                    <h3 class="footer-heading">Games</h3>
-                    <ul class="footer-links">
-                        <li><a href="#latest-games">VALORANT</a></li>
-                        <li><a href="#latest-games">League of Legends</a></li>
-                        <li><a href="#latest-games">CS:GO</a></li>
-                        <li><a href="#latest-games">Dota 2</a></li>
-                        <li><a href="#latest-games">Apex Legends</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3">
-                    <h3 class="footer-heading">Tournaments</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Upcoming Events</a></li>
-                        <li><a href="#">Live Matches</a></li>
-                        <li><a href="#">Results</a></li>
-                        <li><a href="#">Rankings</a></li>
-                        <li><a href="#">Schedule</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-3">
-                    <h3 class="footer-heading">Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
-                        <li><a href="#">Bug Reports</a></li>
-                        <li><a href="#">Feature Requests</a></li>
-                        <li><a href="#">Community Guidelines</a></li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <hr class="footer-divider">
-
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3 footer-bottom">
-                <p class="footer-copyright">©2025 GameArena. All rights reserved.</p>
-                <ul class="footer-legal-links">
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
-                </ul>
-            </div>
-
-        </div>
-    </footer>
-
-    <script src="js/bootstrap.bundle.min.js"></script>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
+  <script src="js/main.js"></script>
 </body>
-
 </html>
